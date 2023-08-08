@@ -7,8 +7,20 @@ export default {
   'data-sources': {
     'bloomreach/content': async (config, context) => {
       const contentApi = new ContentApi(context.frontasticContext as Context, getLocale(context.request));
+      const { channel, page } = config.configuration;
       return {
-        dataSourcePayload: await contentApi.getContent(),
+        dataSourcePayload: await contentApi.getContent(channel, page),
+      };
+    },
+    'bloomreach/content-list': async (config, context) => {
+      const contentApi = new ContentApi(context.frontasticContext as Context, getLocale(context.request));
+
+      const { channel, pages } = config.configuration;
+
+      const payload = await contentApi.getContentList(channel, pages);
+
+      return {
+        dataSourcePayload: payload,
       };
     },
   },
