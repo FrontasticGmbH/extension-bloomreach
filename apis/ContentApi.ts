@@ -3,6 +3,7 @@ import axios from 'axios';
 import { initialize } from '@bloomreach/spa-sdk';
 import { ContentMapper } from '@Content-bloomreach/mappers/ContentMapper';
 import { Content } from '@Types/content/Content';
+import { getFromProjectConfig } from '@Content-contentful/utils/Context';
 
 export default class ContentApi {
   private locale: string;
@@ -10,7 +11,11 @@ export default class ContentApi {
 
   constructor(frontasticContext: Context, locale?: string) {
     this.locale = (locale ?? frontasticContext.project.defaultLocale).replace('_', '-');
-    this.deliveryApiUrl = frontasticContext.project.configuration?.bloomreach.deliveryApiUrl;
+    this.deliveryApiUrl = getFromProjectConfig('EXTENSION_BLOOMREACH_DELIVERY_API_URL', frontasticContext);
+
+    if (!this.deliveryApiUrl) {
+      this.deliveryApiUrl = frontasticContext.project.configuration?.bloomreach?.deliveryApiUrl;
+    }
   }
 
   async getContent(channel: string, page: string) {
