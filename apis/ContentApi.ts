@@ -3,7 +3,7 @@ import axios from 'axios';
 import { initialize } from '@bloomreach/spa-sdk';
 import { ContentMapper } from '@Content-bloomreach/mappers/ContentMapper';
 import { Content } from '@Types/content/Content';
-import { getFromProjectConfig } from '@Content-contentful/utils/Context';
+import { getFromProjectConfig } from '@Content-bloomreach/utils/Context';
 
 export default class ContentApi {
   private locale: string;
